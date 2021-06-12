@@ -21,7 +21,7 @@ from six import binary_type
 from six.moves.urllib.request import pathname2url
 from .configs import config, SESSION
 from .core import is_allowed
-from .globals import CSS_IMPORTS_RE, CSS_URLS_RE, POOL_LIMIT, MARK, __version__, lru_cache
+from .globals import CSS_IMPORTS_RE, CSS_URLS_RE, MARK, __version__, lru_cache
 from .urls import URLTransformer, relate
 
 __all__ = ['TagBase', 'AnchorTag', 'ImgTag', 'ScriptTag', 'LinkTag', '_ElementFactory']
@@ -53,8 +53,7 @@ class FileMixin(URLTransformer):
 
     def run(self):
         # XXX: This could wait for any condition
-        with POOL_LIMIT:
-            self.download_file()
+        self.download_file()
 
     save_file = run
 
@@ -302,23 +301,22 @@ class LinkTag(TagBase):
         Thus css file content needs to be searched for urls and then it will proceed
         as usual.
         """
-        with POOL_LIMIT:
-            if os.path.exists(self.file_path):
-                if not config['over_write']:
-                    LOGGER.info("File already exists at location: [%r]" % self.file_path)
-                    return
-            # LinkTags can also be specified for elements like favicon etc.
-            # Thus a check is necessary to validate it is a proper css file or not.
-            if not self._url.endswith('.css'):
-                super(LinkTag, self).run()
-
-            # Custom request object creation
-            req = SESSION.get(self.url, stream=True)
-
-            # if some error occurs
-            if not req or not req.ok:
-                LOGGER.error("URL returned an unknown response: [%s]" % self.url)
+        if os.path.exists(self.file_path):
+            if not config['over_write']:
+                LOGGER.info("File already exists at location: [%r]" % self.file_path)
                 return
+        # LinkTags can also be specified for elements like favicon etc.
+        # Thus a check is necessary to validate it is a proper css file or not.
+        if not self._url.endswith('.css'):
+            super(LinkTag, self).run()
+
+        # Custom request object creation
+        req = SESSION.get(self.url, stream=True)
+
+        # if some error occurs
+        if not req or not req.ok:
+            LOGGER.error("URL returned an unknown response: [%s]" % self.url)
+            return
 
             # Try to avoid pulling the contents in the ram
             # while substituting urls in the contents would NOT

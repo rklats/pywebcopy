@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
 import textwrap
-import threading
 
 from . import __version__
 
@@ -94,7 +93,6 @@ def lru_cache(maxsize = 255, timeout = None):
 # under control so that the resource overloading could
 # be prevented and the program remains memory efficient
 #: new in version: 6.0.0
-POOL_LIMIT = threading.Semaphore(5)
 
 MARK = textwrap.dedent("""
         {0}

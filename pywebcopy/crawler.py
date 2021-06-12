@@ -17,7 +17,6 @@ usage::
 
 """
 import os
-import threading
 import warnings
 
 from .elements import TagBase
@@ -26,8 +25,6 @@ from .webpage import WebPage
 
 
 INDEX = set()
-INDEX_LOCK = threading.Lock()
-
 
 class SubPage(TagBase):
     """Custom anchor tag handler.
@@ -93,13 +90,12 @@ class SubPage(TagBase):
         if _sub_page is None or not getattr(_sub_page, '_stack'):
             return
 
-        with INDEX_LOCK:
-            elements = list(_sub_page.elements)
-            for elem in elements:
-                if elem.url not in INDEX:
-                    INDEX.add(elem.url)
-                else:
-                    _sub_page.elements.remove(elem)
+        elements = list(_sub_page.elements)
+        for elem in elements:
+            if elem.url not in INDEX:
+                INDEX.add(elem.url)
+            else:
+                _sub_page.elements.remove(elem)
 
         _sub_page.save_complete()
 
@@ -150,10 +146,9 @@ class Crawler(WebPage):
 
         self.parse()
 
-        with INDEX_LOCK:
-            elements = list(self.elements)
-            for elem in elements:
-                INDEX.add(elem.url)
+        elements = list(self.elements)
+        for elem in elements:
+            INDEX.add(elem.url)
 
         self.save_complete()
 

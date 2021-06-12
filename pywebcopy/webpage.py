@@ -32,10 +32,8 @@ Usage::
 
 import logging
 import os
-import threading
 from operator import attrgetter
 
-from .globals import POOL_LIMIT
 from .configs import SESSION, config
 from .elements import _ElementFactory, LinkTag, ScriptTag, ImgTag, AnchorTag, TagBase
 from .exceptions import ParseError
@@ -228,10 +226,7 @@ class WebPage(Parser, _ElementFactory):
         LOGGER.log(100, "Queueing download of <%d> asset files." % len(elms))
 
         for elem in elms:
-            with POOL_LIMIT:
-                t = threading.Thread(name=repr(elem), target=elem.run)
-                t.start()
-                self._threads.append(t)
+                elem.run()
 
     def save_html(self, file_name=None, raw_html=False):
         """Saves the html of the page to a default or specified file.
