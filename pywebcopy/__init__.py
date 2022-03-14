@@ -63,7 +63,9 @@ __all__ = [
 
 #: logging optimisations
 logging.logThreads = 0
-logging.logProcesses = 0
+# The following config causes an error/conflict with our library:
+# 'TypeError: %d format: a number is required, not NoneType'
+#logging.logProcesses = 0
 logging._srcfile = None
 c_handler = logging.StreamHandler()
 logging.basicConfig(
