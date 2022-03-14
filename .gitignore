@@ -9,3 +9,7 @@
 Pipfile
 Pipfile.lock
 /testing/
+
+reqs
+save_webpage.py
+
