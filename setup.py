@@ -95,7 +95,7 @@ setup(
     author_email=EMAIL,
     url=URL,
     # If your package is a single module, use py_modules instead of 'packages':
-    packages=[__version__.__title__],
+    packages=['pywebcopy'],
 
     install_requires=REQUIRED,
     include_package_data=True,
