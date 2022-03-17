@@ -13,16 +13,14 @@ from shutil import rmtree
 from setuptools import setup
 from setuptools import Command
 
-from pywebcopy import __version__
-
 # Package meta-data.
-NAME = __version__.__title__
-DESCRIPTION = __version__.__description__
-URL = __version__.__url__
-LICENSE = __version__.__license__
-EMAIL = __version__.__email__
-AUTHOR = __version__.__author__
-VERSION = __version__.__version__
+NAME = 'pywebcopy'
+DESCRIPTION = 'Python library to clone/archive pages or sites from the Internet.'
+URL = 'https://github.com/rklats/pywebcopy/'
+LICENSE = 'Apache Software License'
+EMAIL = 'rajatomar788@gmail.com'
+AUTHOR = 'Raja Tomar'
+VERSION = '33f8e808bfb3e4816314357db2f5f0e9d384f2fe-rklats'
 
 # What packages are required for this module to be executed?
 REQUIRED = []
