@@ -22,12 +22,6 @@ EMAIL = 'rajatomar788@gmail.com'
 AUTHOR = 'Raja Tomar'
 VERSION = pywebcopy.__version__
 
-# What packages are required for this module to be executed?
-REQUIRED = [
-    'requests', 'lxml', 'pyquery', 'parse', 'w3lib', 'bs4', 'fire', 'typing; python_version<\"3.5\"',
-]
-
-
 # If you do change the License, remember to change the Trove Classifier for that!
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -95,7 +89,17 @@ setup(
     # If your package is a single module, use py_modules instead of 'packages':
     packages=['pywebcopy', 'tests'],
 
-    install_requires=REQUIRED,
+    install_requires=[
+        "beautifulsoup4 >= 4.9.1",
+        "fire == 0.4.0",
+        "lxml == 4.8.0",
+        "parse == 1.19.0",
+        "pyquery >= 1.4.3",
+        "requests == 2.22.0",
+        "setuptools == 45.2.0",
+        "six == 1.14.0",
+        "w3lib == 1.22.0"
+    ],
     include_package_data=True,
     license=LICENSE,
     classifiers=[
